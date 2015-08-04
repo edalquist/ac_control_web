@@ -13,7 +13,7 @@
    * @constructor
    */
   function PhotonService($q, $resource, $http){
-    var Devices = $resource('https://api.particle.io/v1/devices/:deviceId/:variableOrFunction?access_token=ebfcf478455634155e16294005ccc47e349e2f63');
+    var Devices = $resource('https://api.particle.io/v1/devices/:deviceId/:variableOrFunction?access_token=' + at);
 
     // Promise-based API
     return {
@@ -25,7 +25,7 @@
       },
       doUpdate : function(deviceId, state) {
         return $http({
-          url: 'https://api.particle.io/v1/devices/' + deviceId + '/setState?access_token=ebfcf478455634155e16294005ccc47e349e2f63',
+          url: 'https://api.particle.io/v1/devices/' + deviceId + '/setState?access_token=' + at,
           method: "POST",
           data: "message=" + state,
           headers: {
