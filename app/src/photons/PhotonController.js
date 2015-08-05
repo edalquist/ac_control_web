@@ -37,6 +37,8 @@
     photonService
           .loadAllPhotons()
           .then( function( photons ) {
+            photons = photons.data;
+            console.log("loadAll", photons);
             self.photons    = [].concat(photons);
             for (var i = 0; i < photons.length; i++) {
               if (photons[i].connected) {
@@ -100,7 +102,7 @@
     function selectPhoton ( photon ) {
       self.selected = angular.isNumber(photon) ? $scope.photons[photon] : photon;
       photonService.loadPhotonStatus(photon.id).then(function (status) {
-        var acStatus = JSON.parse(status.result);
+        var acStatus = JSON.parse(status.data.result);
         if (acStatus.temp == 0 && acStatus.fan == 'X' && acStatus.mode == 'X') {
           self.acOff = true;
         } else {

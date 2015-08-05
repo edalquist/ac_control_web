@@ -4,10 +4,32 @@ api_version: 1
 threadsafe: true
 
 handlers:
-- url: /(.+\..+)
+- url: /assets/(.+)
+  static_files: assets/\1
+  upload: assets/(.+)
+  login: admin
+  secure: always
+
+- url: /bower_components/(.+)
+  static_files: bower_components/\1
+  upload: bower_components/(.+)
+  login: admin
+  secure: always
+
+- url: /src/(.+)
+  static_files: src/\1
+  upload: src/(.+)
+  login: admin
+  secure: always
+
+- url: /(.+)
   static_files: ./\1
-  upload: /(.+\..+)
+  upload: (.+)
+  login: admin
+  secure: always
 
 - url: /
   static_files: index.html
   upload: index.html
+  login: admin
+  secure: always

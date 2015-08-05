@@ -1,0 +1,64 @@
+	<md-toolbar layout="row" class="md-whiteframe-z1">
+  <md-button class="menu" hide-gt-sm ng-click="plc.toggleList()" aria-label="Show User List">
+    <md-icon md-svg-icon="menu" ></md-icon>    
+  </md-button>   
+  <h1>AC List</h1>
+</md-toolbar>
+
+<md-content flex id="content">
+	<md-card ng-repeat="it in plc.photons | orderBy:'!connected'" ng-disabled="{{!it.connected}}">
+    <h2>{{it.name}} {{it.last_heard}}</h2>
+
+    <!-- <div layout="row" ng-if="plc.acOff">Off</div>
+    <div layout="row" ng-if="!plc.acOff">
+      Temp: {{plc.temp}}
+      Mode: {{plc.mode}}
+      Fan Speed: {{plc.fan}}
+    </div>
+    <div layout="row">
+      <md-input-container>
+        <md-select placeholder="Temp" ng-model="plc.userTemp" ng-change="plc.update()">
+          <md-option value="66">66</md-option>
+          <md-option value="67">67</md-option>
+          <md-option value="68">68</md-option>
+          <md-option value="69">69</md-option>
+          <md-option value="70">70</md-option>
+          <md-option value="71">71</md-option>
+          <md-option value="72">72</md-option>
+          <md-option value="73">73</md-option>
+          <md-option value="74">74</md-option>
+          <md-option value="75">75</md-option>
+          <md-option value="76">76</md-option>
+          <md-option value="77">77</md-option>
+          <md-option value="78">78</md-option>
+        </md-select>
+      </md-input-container>
+
+      <md-input-container>
+        <md-select placeholder="Temp" ng-model="plc.userMode" ng-change="plc.update()">
+          <md-option value="OFF" ng-selected="plc.userMode == 'OFF' || self.acOff">OFF</md-option>
+          <md-option value="MODE_FAN">Fan</md-option>
+          <md-option value="MODE_ECO">Eco</md-option>
+          <md-option value="MODE_COOL">Cool</md-option>
+        </md-select>
+      </md-input-container>
+
+      <md-input-container>
+        <md-select placeholder="Fan Speed" ng-model="plc.userSpeed" ng-change="plc.update()">
+          <md-option value="OFF" ng-selected="plc.userSpeed == 'OFF' || self.acOff">OFF</md-option>
+          <md-option value="FAN_LOW">Low</md-option>
+          <!- -<md-option value="FAN_MEDIUM">Low</md-option>- ->
+          <md-option value="FAN_HIGH">High</md-option>
+          <md-option value="FAN_AUTO">Auto</md-option>
+        </md-select>
+      </md-input-container>
+
+      <md-progress-circular ng-if="plc.updating" class="md-hue-2" md-mode="indeterminate"></md-progress-circular> -->
+    </div>
+  </md-card>
+  
+  <!-- <md-button class="contact" md-no-ink ng-click="plc.showContactOptions($event)" aria-label="Contact Photon">
+    <md-tooltip>Contact {{ plc.selected.name }}</md-tooltip>
+    <md-icon md-svg-icon="share"></md-icon>
+  </md-button> -->
+</md-content>

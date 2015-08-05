@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" >
   <head>
+    <base href="/">
+
     <title>AC Controller</title>
 
     <meta charset="utf-8">
@@ -8,98 +10,42 @@
     <meta name="description" content="">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, photon-scalable=no" />
 
-    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
     <link rel="stylesheet" href="./bower_components/angular-material/angular-material.css"/>
     <link rel="stylesheet" href="assets/app.css"/>
   </head>
 
-  <body ng-app="starterApp" layout="row" ng-controller="PhotonController as ul">
+  <body ng-app="starterApp" layout="row">
 
   <md-sidenav class="site-sidenav md-sidenav-left md-whiteframe-z2"
                 md-component-id="left"
                 md-is-locked-open="$mdMedia('gt-sm')">
 
     <md-toolbar class="md-whiteframe-z1">
-      <h1>Photons</h1>
+      <h1>AC Controller</h1>
     </md-toolbar>
 
     <md-list>
-      <md-list-item ng-repeat="it in ul.photons | orderBy:'!connected'">
-          <md-button ng-click="ul.selectPhoton(it)" ng-class="{'selected' : it === ul.selected }" ng-disabled="{{!it.connected}}">
-            <md-icon md-svg-icon="{{it.avatar}}" class="avatar"></md-icon>
-            {{it.name}}
-          </md-button>
+      <md-list-item>
+        <md-button ng-href="/list">
+          AC List
+        </md-button>
+      </md-list-item>
+      </md-list-item>
+        <md-button ng-href="/presets">
+          Presets
+        </md-button>
       </md-list-item>
     </md-list>
-
   </md-sidenav>
 
 
   <div flex layout="column" tabIndex="-1" role="main" class="md-whiteframe-z2">
-
-    <md-toolbar layout="row" class="md-whiteframe-z1">
-      <h1>AC Controller</h1>
-    </md-toolbar>
-
-    <md-content flex id="content">
-      <h2>{{ul.selected.name}} {{ul.selected.last_heard}}</h2>
-      <div layout="row" ng-if="ul.acOff">Off</div>
-      <div layout="row" ng-if="!ul.acOff">
-        Temp: {{ul.temp}}
-        Mode: {{ul.mode}}
-        Fan Speed: {{ul.fan}}
-      </div>
-      <div layout="row">
-        <md-input-container>
-          <md-select placeholder="Temp" ng-model="ul.userTemp" ng-change="ul.update()">
-            <md-option value="66">66</md-option>
-            <md-option value="67">67</md-option>
-            <md-option value="68">68</md-option>
-            <md-option value="69">69</md-option>
-            <md-option value="70">70</md-option>
-            <md-option value="71">71</md-option>
-            <md-option value="72">72</md-option>
-            <md-option value="73">73</md-option>
-            <md-option value="74">74</md-option>
-            <md-option value="75">75</md-option>
-            <md-option value="76">76</md-option>
-            <md-option value="77">77</md-option>
-            <md-option value="78">78</md-option>
-          </md-select>
-        </md-input-container>
-
-        <md-input-container>
-          <md-select placeholder="Temp" ng-model="ul.userMode" ng-change="ul.update()">
-            <md-option value="OFF" ng-selected="ul.userMode == 'OFF' || self.acOff">OFF</md-option>
-            <md-option value="MODE_FAN">Fan</md-option>
-            <md-option value="MODE_ECO">Eco</md-option>
-            <md-option value="MODE_COOL">Cool</md-option>
-          </md-select>
-        </md-input-container>
-
-        <md-input-container>
-          <md-select placeholder="Fan Speed" ng-model="ul.userSpeed" ng-change="ul.update()">
-            <md-option value="OFF" ng-selected="ul.userSpeed == 'OFF' || self.acOff">OFF</md-option>
-            <md-option value="FAN_LOW">Low</md-option>
-            <!--<md-option value="FAN_MEDIUM">Low</md-option>-->
-            <md-option value="FAN_HIGH">High</md-option>
-            <md-option value="FAN_AUTO">Auto</md-option>
-          </md-select>
-        </md-input-container>
-
-        <md-progress-circular ng-if="ul.updating" class="md-hue-2" md-mode="indeterminate"></md-progress-circular>
-      </div>
-      
-      <!-- <md-button class="contact" md-no-ink ng-click="ul.showContactOptions($event)" aria-label="Contact Photon">
-        <md-tooltip>Contact {{ ul.selected.name }}</md-tooltip>
-        <md-icon md-svg-icon="share"></md-icon>
-      </md-button> -->
-    </md-content>
-
+    <div ng-view class="view-animate"></div>
   </div>
 
     <script src="./bower_components/angular/angular.js"></script>
-    <script src="./bower_components/angular-resource/angular-resource.js"></script>
+    <script src="./bower_components/angular-route/angular-route.js"></script>
     <script src="./bower_components/angular-animate/angular-animate.js"></script>
     <script src="./bower_components/angular-aria/angular-aria.js"></script>
     <script type="text/javascript" src="./bower_components/angular-material/angular-material.js"></script>
@@ -112,8 +58,22 @@
     <script type="text/javascript">
 
           angular
-              .module('starterApp', ['ngMaterial', 'ngResource', 'photons'])
-              .config(function($mdThemingProvider, $mdIconProvider){
+              .module('starterApp', ['ngMaterial', 'ngRoute', 'photons'])
+              .config(function($mdThemingProvider, $mdIconProvider, $locationProvider, $routeProvider){
+                  $locationProvider.html5Mode(true);
+
+                  $routeProvider
+                    .when('/list', {
+                      templateUrl: 'list.html',
+                      controller: 'PhotonController',
+                      controllerAs: 'plc'
+                    })
+                    .when('/presets', {
+                      templateUrl: 'presets.html',
+                      controller: 'PhotonController',
+                      controllerAs: 'plc'
+                    })
+                    .otherwise({redirectTo: '/list'});
 
                   $mdIconProvider
                       .defaultIconSet("./assets/svg/avatars.svg", 128)
