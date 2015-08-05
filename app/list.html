@@ -1,13 +1,18 @@
 	<md-toolbar layout="row" class="md-whiteframe-z1">
-  <md-button class="menu" hide-gt-sm ng-click="plc.toggleList()" aria-label="Show User List">
+  <md-button class="menu" hide-gt-sm ng-click="alc.toggleList()" aria-label="Show User List">
     <md-icon md-svg-icon="menu" ></md-icon>    
   </md-button>   
   <h1>AC List</h1>
 </md-toolbar>
 
 <md-content flex id="content">
-	<md-card ng-repeat="it in plc.photons | orderBy:'!connected'" ng-disabled="{{!it.connected}}">
-    <h2>{{it.name}} {{it.last_heard}}</h2>
+	<md-card ng-repeat="it in alc.devices | orderBy:'!connected'">
+    <h2>
+      <md-button ng-click="alert('test')">
+        <md-icon md-svg-icon="{{it.connected ? 'power_button_on' : 'power_button_off'}}" ></md-icon>
+      </md-button>
+      {{it.name}}
+    </h2>
 
     <!-- <div layout="row" ng-if="plc.acOff">Off</div>
     <div layout="row" ng-if="!plc.acOff">
