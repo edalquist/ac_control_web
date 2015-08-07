@@ -1,8 +1,8 @@
 (function(){
   'use strict';
 
-  angular.module('photons')
-         .service('photonService', ['$q', '$http', PhotonService]);
+  angular.module('acController')
+         .service('particleService', ['$q', '$http', ParticleService]);
    
   /**
    * Photons DataService
@@ -12,12 +12,12 @@
    * @returns {{loadAll: Function}}
    * @constructor
    */
-  function PhotonService($q, $http){
+  function ParticleService($q, $http){
     // var Devices = $resource('https://api.particle.io/v1/devices/:deviceId/:variableOrFunction?access_token=' + at);
 
     // Promise-based API
     return {
-      loadAllPhotons : function() {
+      loadAllDevices : function() {
         return $http.get('https://api.particle.io/v1/devices?access_token=' + at);
       },
       loadPhotonStatus : function(deviceId) {

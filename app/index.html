@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="assets/app.css"/>
   </head>
 
-  <body ng-app="starterApp" layout="row">
+  <body ng-app="acControllerApp" layout="row">
 
   <md-sidenav class="site-sidenav md-sidenav-left md-whiteframe-z2"
                 md-component-id="left"
@@ -50,39 +50,35 @@
     <script src="./bower_components/angular-aria/angular-aria.js"></script>
     <script type="text/javascript" src="./bower_components/angular-material/angular-material.js"></script>
 
-    <script src="./src/photons/access_token.js"></script>
-    <script src="./src/photons/Photons.js"></script>
-    <script src="./src/photons/PhotonController.js"></script>
-    <script src="./src/photons/PhotonService.js"></script>
+    <script src="./src/js/app.js"></script>
+    <script src="./src/js/access_token.js"></script>
+    <script src="./src/js/AcListController.js"></script>
+    <script src="./src/js/ParticleService.js"></script>
 
     <script type="text/javascript">
 
           angular
-              .module('starterApp', ['ngMaterial', 'ngRoute', 'photons'])
+              .module('acControllerApp', ['ngMaterial', 'ngRoute', 'acController'])
               .config(function($mdThemingProvider, $mdIconProvider, $locationProvider, $routeProvider){
                   $locationProvider.html5Mode(true);
 
                   $routeProvider
                     .when('/list', {
                       templateUrl: 'list.html',
-                      controller: 'PhotonController',
-                      controllerAs: 'plc'
+                      controller: 'AcListController',
+                      controllerAs: 'alc'
                     })
                     .when('/presets', {
                       templateUrl: 'presets.html',
-                      controller: 'PhotonController',
+                      controller: 'AcListController',
                       controllerAs: 'plc'
                     })
                     .otherwise({redirectTo: '/list'});
 
                   $mdIconProvider
-                      .defaultIconSet("./assets/svg/avatars.svg", 128)
-                      .icon("menu"       , "./assets/svg/menu.svg"        , 24)
-                      .icon("share"      , "./assets/svg/share.svg"       , 24)
-                      .icon("google_plus", "./assets/svg/google_plus.svg" , 512)
-                      .icon("hangouts"   , "./assets/svg/hangouts.svg"    , 512)
-                      .icon("twitter"    , "./assets/svg/twitter.svg"     , 512)
-                      .icon("phone"      , "./assets/svg/phone.svg"       , 512);
+                      .icon("power_button_on",  "./assets/svg/power_button_on.svg",   512)
+                      .icon("power_button_off", "./assets/svg/power_button_off.svg",  512)
+                      .icon("menu",             "./assets/svg/menu.svg",               24);
 
                       $mdThemingProvider.theme('default')
                           .primaryPalette('brown')
