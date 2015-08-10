@@ -20,8 +20,11 @@
       loadAllDevices : function() {
         return $http.get('https://api.particle.io/v1/devices?access_token=' + at);
       },
-      loadPhotonStatus : function(deviceId) {
+      loadDeviceDetails : function(deviceId) {
         return $http.get('https://api.particle.io/v1/devices/' + deviceId + '/status?access_token=' + at);
+      },
+      loadDeviceVariable : function(deviceId, variable) {
+        return $http.get('https://api.particle.io/v1/devices/' + deviceId + '/' + variable + '?access_token=' + at);
       },
       doUpdate : function(deviceId, state) {
         return $http({

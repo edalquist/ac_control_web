@@ -18,31 +18,17 @@
     , $mdSidenav, $mdBottomSheet, $log, $q, $scope) {
     var self = this;
 
-    self.devices        = [ ];
     self.toggleMenu     = toggleMenuList;
-
-    // self.acOff = true;
-    // self.userAcOff = true;
-
-    // $scope.$watch(function() { return self.userAcOff; }, update);
-    // $scope.$watch(function() { return self.userTemp; }, update);
-    // $scope.$watch(function() { return self.userMode; }, update);
-    // $scope.$watch(function() { return self.userSpeed; }, update);
+    self.devices        = [ ];
 
     // Load all registered devices
-
     particleService
           .loadAllDevices()
           .then( function( devices ) {
             devices = devices.data;
             self.devices    = [].concat(devices);
+            self.toggleMenu     = toggleMenuList;
             console.log("loadAll", self.devices);
-            // for (var i = 0; i < devices.length; i++) {
-            //   if (devices[i].connected) {
-            //     selectPhoton(devices[i]);
-            //     break;
-            //   }
-            // }
           });
 
     // *********************************
@@ -54,100 +40,15 @@
      * hide or Show the 'left' sideNav area
      */
     function toggleMenuList() {
-      var pending = $mdBottomSheet.hide() || $q.when(true);
+        $log.debug("toggle menu");
+      // var pending = $mdBottomSheet.hide() || $q.when(true);
 
-      pending.then(function(){
+      // pending.then(function(){
         $mdSidenav('left').toggle();
-      });
+      // });
     }
 
-    // var timeoutID = null;
-    // function update() {
-
-    //   if (self.userTemp != undefined && self.userSpeed != undefined && self.userMode != undefined) {
-    //     var state;
-    //     if (self.userSpeed == "OFF" || self.userMode == "OFF") {
-    //       self.userSpeed == "OFF";
-    //       self.userMode == "OFF";
-    //       state = "OFF";
-    //     } else if (self.temp != self.userTemp || self.speed != self.userSpeed || self.mode != self.userMode) {
-    //       state = self.userTemp + "," + self.userMode + "," + self.userSpeed;
-    //     }
-
-    //     if (timeoutID != null) {
-    //       window.clearTimeout(timeoutID);
-    //     }
-    //     timeoutID = window.setTimeout(function() {
-    //       doUpdate(self.selected, state);
-    //     }, 2000);
-    //     self.updating = true;
-    //   }
-    // }
-
-    // function doUpdate(photon, state) {
-    //   timeoutID = null;
-    //   particleService.doUpdate(photon.id, state).then(function() {
-    //     self.updating = false;
-    //     selectPhoton(self.selected);
-    //   });
-    // }
-
-    // /**
-    //  * Select the current avatars
-    //  * @param menuId
-    //  */
-    // function selectPhoton ( photon ) {
-    //   self.selected = angular.isNumber(photon) ? $scope.devices[photon] : photon;
-    //   particleService.loadPhotonStatus(photon.id).then(function (status) {
-    //     var acStatus = JSON.parse(status.data.result);
-    //     if (acStatus.temp == 0 && acStatus.fan == 'X' && acStatus.mode == 'X') {
-    //       self.acOff = true;
-    //     } else {
-    //       self.acOff = false;
-    //       self.temp = acStatus.temp;
-
-    //       switch (acStatus.fan) {
-    //         case "L":
-    //           self.fan = "Low";
-    //           break;
-    //         case "M":
-    //           self.fan = "Medium";
-    //           break;
-    //         case "H":
-    //           self.fan = "High";
-    //           break;
-    //         case "A":
-    //           self.fan = "Auto";
-    //           break;
-    //         default:
-    //           self.fan = "Unknown";
-    //           break;
-    //       }
-
-    //       switch (acStatus.mode) {
-    //         case "F":
-    //           self.mode = "Fan";
-    //           break;
-    //         case "E":
-    //           self.mode = "Eco";
-    //           break;
-    //         case "C":
-    //           self.mode = "Cool";
-    //           break;
-    //         default:
-    //           self.mode = "Unknown";
-    //           break;
-    //       }
-
-    //       if (self.userTemp != undefined || self.userSpeed != undefined || self.userMode != undefined) {
-    //         self.userTemp = self.temp;
-    //         self.userMode = self.mode;
-    //         self.userSpeed = self.speed;
-    //       }
-    //     }
-    //   });
-    //   self.toggleUsersList();
-    // }
+    
 
     // /**
     //  * Show the bottom sheet

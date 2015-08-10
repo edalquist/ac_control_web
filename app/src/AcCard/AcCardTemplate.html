@@ -1,0 +1,39 @@
+<md-card>
+  <h2>
+    <md-button ng-click="ctrl.powerToggle()" ng-disabled="ctrl.state == 'offline'">
+      <md-progress-circular ng-if="ctrl.loading" class="md-hue-2" md-mode="indeterminate" md-diameter="24"></md-progress-circular>
+      <md-icon ng-if="!ctrl.loading" md-svg-icon="{{'status_' + ctrl.state}}" ></md-icon>
+    </md-button>
+    {{device.name}}
+  </h2>
+  <md-card-content>
+    <div layout="row" ng-if="ctrl.state == 'on'">
+      <md-input-container>
+        <md-select placeholder="Temp" ng-model="ctrl.newTemp" ng-change="ctrl.update()">
+          <md-option type="number" ng-repeat="temp in ctrl.tempRange()" value="{{temp}}" ng-selected="temp == ctrl.temp">
+            {{temp}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+
+      <md-input-container>
+        <md-select placeholder="Fan Speed" ng-model="ctrl.newFan" ng-change="ctrl.update()">
+          <md-option ng-repeat="fan in ctrl.fanSpeeds()" value="{{fan.code}}" ng-selected="fan.code == ctrl.fan.code">
+            {{fan.name}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+
+      <md-input-container>
+        <md-select placeholder="Mode" ng-model="ctrl.newMode" ng-change="ctrl.update()">
+          <md-option ng-repeat="mode in ctrl.acModes()" value="{{mode.code}}" ng-selected="mode.code == ctrl.mode.code">
+            {{mode.name}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+    </div>
+    <div layout="row" ng-if="ctrl.state != 'offline'">
+      <span>Last Heard: </span><span title="{{ ctrl.lastHeard | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}">{{ ctrl.lastHeard | amCalendar }}</span>
+    </div>
+  </md-card-content>
+</md-card>  
